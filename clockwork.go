@@ -28,12 +28,10 @@ func (b *Bundle) Name() string {
 
 // Build implements the glue.Bundle interface.
 func (b *Bundle) Build(builder *di.Builder) error {
-	builder.Add(di.Def{
+	return builder.Add(di.Def{
 		Name: BundleName,
 		Build: func(_ di.Container) (interface{}, error) {
 			return clockwork.NewRealClock(), nil
 		},
 	})
-
-	return nil
 }

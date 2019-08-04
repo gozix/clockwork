@@ -2,7 +2,7 @@ package clockwork
 
 import (
 	"github.com/jonboulle/clockwork"
-	"github.com/sarulabs/di"
+	"github.com/sarulabs/di/v2"
 )
 
 type (

@@ -1,37 +1,34 @@
+// Copyright 2018 Sergey Novichkov. All rights reserved.
+// For the full copyright and license information, please view the LICENSE
+// file that was distributed with this source code.
+
 package clockwork
 
 import (
+	"github.com/gozix/di"
+	"github.com/gozix/glue/v3"
+
 	"github.com/jonboulle/clockwork"
-	"github.com/sarulabs/di/v2"
 )
 
-type (
-	// Bundle implements the glue.Bundle interface.
-	Bundle struct{}
+// Bundle implements glue.Bundle interface.
+type Bundle struct{}
 
-	// Clock is type alias of clockwork.Clock
-	Clock = clockwork.Clock
-)
-
-// BundleName is default definition name.
+// BundleName is bundle name.
 const BundleName = "clockwork"
+
+// Bundle implements glue.Bundle interface.
+var _ glue.Bundle = (*Bundle)(nil)
 
 // NewBundle create bundle instance.
 func NewBundle() *Bundle {
 	return new(Bundle)
 }
 
-// Key implements the glue.Bundle interface.
 func (b *Bundle) Name() string {
 	return BundleName
 }
 
-// Build implements the glue.Bundle interface.
-func (b *Bundle) Build(builder *di.Builder) error {
-	return builder.Add(di.Def{
-		Name: BundleName,
-		Build: func(_ di.Container) (interface{}, error) {
-			return clockwork.NewRealClock(), nil
-		},
-	})
+func (b *Bundle) Build(builder di.Builder) error {
+	return builder.Provide(clockwork.NewRealClock)
 }
